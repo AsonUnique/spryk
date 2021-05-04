@@ -7,11 +7,24 @@
 
 namespace SprykerSdk\Spryk\Model\Spryk\Filter;
 
-use Doctrine\Common\Inflector\Inflector;
+use SprykerSdk\Spryk\Model\Spryk\Inflector\SingularizerInterface;
 
 class SingularizeFilter implements FilterInterface
 {
     protected const FILTER_NAME = 'singularize';
+
+    /**
+     * @var \SprykerSdk\Spryk\Model\Spryk\Inflector\SingularizerInterface
+     */
+    protected $singularizer;
+
+    /**
+     * @param \SprykerSdk\Spryk\Model\Spryk\Inflector\SingularizerInterface $singularizer
+     */
+    public function __construct(SingularizerInterface $singularizer)
+    {
+        $this->singularizer = $singularizer;
+    }
 
     /**
      * @return string
@@ -28,6 +41,6 @@ class SingularizeFilter implements FilterInterface
      */
     public function filter(string $value): string
     {
-        return Inflector::singularize($value);
+        return $this->singularizer->singularize($value);
     }
 }

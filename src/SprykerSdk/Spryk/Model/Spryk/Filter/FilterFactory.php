@@ -8,6 +8,8 @@
 namespace SprykerSdk\Spryk\Model\Spryk\Filter;
 
 use SprykerSdk\Spryk\Model\Spryk\Builder\Template\Extension\TwigFilterExtension;
+use SprykerSdk\Spryk\Model\Spryk\Inflector\Singularizer;
+use SprykerSdk\Spryk\Model\Spryk\Inflector\SingularizerInterface;
 use Twig\Extension\ExtensionInterface;
 
 class FilterFactory
@@ -172,7 +174,15 @@ class FilterFactory
      */
     public function createSingularizeFilter(): FilterInterface
     {
-        return new SingularizeFilter();
+        return new SingularizeFilter($this->createSingularizer());
+    }
+
+    /**
+     * @return SingularizerInterface
+     */
+    public function createSingularizer(): SingularizerInterface
+    {
+        return new Singularizer();
     }
 
     /**
